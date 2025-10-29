@@ -90,11 +90,9 @@ app.use(
   })
 );
 
-// --- Database (SQLite) --const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'codes.db');
+// --- Database (SQLite) ---
+const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'codes.db');
 const db = new sqlite3.Database(DB_PATH);
-const db = new const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'codes.db');
-const db = new sqlite3.Database(DB_PATH);
-sqlite3.Database(path.join(__dirname, 'codes.db'));
 
 db.serialize(() => {
   db.run(
