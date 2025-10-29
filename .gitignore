@@ -1,0 +1,8 @@
+# never commit secrets or generated files
+.env
+codes.db
+node_modules/
+songs/
+public/
+# macOS junk
+.DS_Store
