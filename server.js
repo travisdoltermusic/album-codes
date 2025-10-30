@@ -205,20 +205,58 @@ app.post('/redeem', (req, res) => {
       req.session.redeemed = true;
       req.session.code = code;
 
-      const files = listSongFiles();
-      const list = files
-        .map(
-          (f) => `<div class="file"><span>${f}</span><a href="/download/${encodeURIComponent(f)}" download>Download</a></div>`
-        )
+            // Instead of reading local /songs files, we’re going to hard-code
+      // each track with its Google Drive direct download link.
+
+      const songs = [
+        {
+          title: "Hit By a Truck",
+          id: "1kpOEHi_4u9kmWr6QmsPwofqxpjctddTB"
+        },
+        {
+          title: "Tailgate Therapy",
+          id: "15tnYbrduSThTG0beeQrNTG3X55byFVZQ"
+        },
+        {
+          title: "Not With That Attitude",
+          id: "1tD0EHqFnl7uJ2KdUKr25j16gDW7XPvbD"
+        },
+        {
+          title: "LAYLA14",
+          id: "1XDsjCObZTvmFRg_Cfg7H_pAzuuq62BM1"
+        },
+        {
+          title: "Gettin' Outta Dodge",
+          id: "1e7rWqv6dKgDs55C2G4AXltEpoqew-qj6"
+        }
+      ];
+
+      // Build the HTML list of download rows
+      const list = songs
+        .map((song) => {
+          const directUrl = `https://drive.google.com/uc?export=download&id=${song.id}`;
+          return `
+            <div class="file">
+              <span>${song.title}</span>
+              <a href="${directUrl}" download>Download</a>
+            </div>
+          `;
+        })
         .join('');
 
+      // Build the page body
       const body = `
-        <img class=\"art\" src=\"/assets/${ARTWORK_FILENAME}\" alt=\"Album artwork\" />
+        <img class="art" src="/assets/${ARTWORK_FILENAME}" alt="Album artwork" />
         <h1>Downloads unlocked 🎧</h1>
         <p class="muted">Code: <span class="pill">${code}</span></p>
-        <div class="files">${list || '<p>No songs uploaded yet.</p>'}</div>
-        <p class="muted center" style="margin-top:16px">Keep this page open while downloading. Links are protected to this browser session.</p>
+        <div class="files">
+          ${list || '<p>No songs uploaded yet.</p>'}
+        </div>
+        <p class="muted center" style="margin-top:16px">
+          Keep this page open while downloading. Links are protected to this browser session.
+        </p>
       `;
+
       res.send(htmlPage('Downloads', body));
     });
   });
