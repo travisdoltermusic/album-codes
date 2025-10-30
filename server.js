@@ -60,8 +60,8 @@ const ADMIN_KEY = process.env.ADMIN_KEY || 'change-me-admin-key';
 const SESSION_SECRET = process.env.SESSION_SECRET || 'change-me-session-secret';
 const SITE_NAME = process.env.SITE_NAME || 'Album Download';
 const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
-const SONGS_DIR = path.join(__dirname, 'songs');
-const PUBLIC_DIR = path.join(__dirname, 'public');
+const SONGS_DIR = process.env.SONGS_DIR || path.join(__dirname, 'songs');
+const PUBLIC_DIR = process.env.PUBLIC_DIR || path.join(__dirname, 'public');
 const ARTWORK_FILENAME = process.env.ARTWORK_FILENAME || 'artwork.jpg';
 
 // Ensure songs & public directories exist
